@@ -263,7 +263,7 @@ def start_objstore(node_ip_address, redis_address, cleanup=True, redirect_output
           print('/dev/shm has on {} bytes available, reducing object store memory'.format(shm_avail))
           objstore_memory = shm_avail
       finally:
-        fobs.close()
+        os.close(shm_fd)
     else:
       objstore_memory = int(system_memory * 0.75)
   # Start the Plasma store.
