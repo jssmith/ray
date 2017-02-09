@@ -217,10 +217,9 @@ def start_redis(port=None, num_retries=20, cleanup=True, redirect_output=False):
   while counter < num_retries:
     if counter > 0:
       print("Redis failed to start, retrying now.")
-    with open(os.devnull, "w") as FNULL:
-      stdout = FNULL if redirect_output else None
-      stderr = FNULL if redirect_output else None
-      p = subprocess.Popen([redis_filepath, "--port", str(port), "--loglevel", "warning", "--loadmodule", redis_module], stdout=stdout, stderr=stderr)
+    stdout = open("/tmp/log_redis_out", "w") if redirect_output else None
+    stderr = open("/tmp/log_redis_err", "w") if redirect_output else None
+    p = subprocess.Popen([redis_filepath, "--port", str(port), "--loglevel", "warning", "--loadmodule", redis_module], stdout=stdout, stderr=stderr)
     time.sleep(0.1)
     # Check if Redis successfully started (or at least if it the executable did
     # not exit within 0.1 seconds).
@@ -371,10 +370,9 @@ def start_worker(node_ip_address, object_store_name, object_store_manager_name, 
              "--object-store-manager-name=" + object_store_manager_name,
              "--local-scheduler-name=" + local_scheduler_name,
              "--redis-address=" + str(redis_address)]
-  with open(os.devnull, "w") as FNULL:
-    stdout = FNULL if redirect_output else None
-    stderr = FNULL if redirect_output else None
-    p = subprocess.Popen(command, stdout=stdout, stderr=stderr)
+  stdout = open("/tmp/log_worker_out", "w") if redirect_output else None
+  stderr = open("/tmp/log_worker_err", "w") if redirect_output else None
+  p = subprocess.Popen(command, stdout=stdout, stderr=stderr)
   if cleanup:
     all_processes[PROCESS_TYPE_WORKER].append(p)
 
