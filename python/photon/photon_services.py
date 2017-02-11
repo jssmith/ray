@@ -44,7 +44,7 @@ def start_local_scheduler(plasma_store_name,
     use_profiler (bool): True if the local scheduler should be started inside a
       profiler. If this is True, use_valgrind must be False.
     redirect_stdout (str): path to redirect stdout, or None for no redirection.
-    redirect_stderr (str): path to redirect stdout, or None for no redirection.
+    redirect_stderr (str): path to redirect stderr, or None for no redirection.
     static_resource_list (list): A list of integers specifying the local
       scheduler's resource capacities. The resources should appear in an order
       matching the order defined in task.h.
